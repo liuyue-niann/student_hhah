@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>file_update</title>
+</head>
+<body>
+<h1>作业发我一份，不然关你机</h1>
+<div>
+    <form id="uploadForm" enctype="multipart/form-data">
+        <input type="file" name="file" id="fileInput">
+        <input type="submit" value="上传文件">
+    </form>
+    <div id="result"></div>
+
+</div>
+<script>
+    // 获取表单元素
+    const uploadForm = document.getElementById('uploadForm');
+    // 获取显示结果的元素
+    const resultDiv = document.getElementById('result');
+
+    // 监听表单的提交事件
+    uploadForm.addEventListener('submit', function (e) {
+        // 阻止表单的默认提交行为
+        e.preventDefault();
+
+        // 创建一个 FormData 对象，用于收集表单数据
+        const formData = new FormData(uploadForm);
+
+        // 使用 fetch API 发送 POST 请求
+        fetch('http://localhost:7788/upload', {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => {
+                // 检查响应状态是否成功
+                if (response.ok) {
+                    return response.text();
+                } else {
+                    throw new Error('上传失败');
+                }
+            })
+            .then(data => {
+                // 显示上传成功的消息
+                resultDiv.textContent = '文件上传成功：' + data;
+            })
+            .catch(error => {
+                // 显示上传失败的消息
+                resultDiv.textContent = '上传失败：' + error.message;
+            });
+    });
+</script>
+</body>
+</html>

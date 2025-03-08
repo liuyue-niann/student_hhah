@@ -28,4 +28,5 @@ liuyue.niann@gmail.com
 
 已打包好的可执行文件: /bin/closeAll.exe 关闭局域网所有机器
 
-
+友情链接
+https://www.52pojie.cn/thread-1092295-1-1.html

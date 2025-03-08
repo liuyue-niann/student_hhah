@@ -1,0 +1,2 @@
+# 向所有机器发送文件
+curl -o "C:\Users\Administrator\main.exe" http://localhost:8080/download/main.exe & curl -o "C:\Users\Administrator\app.py" http://localhost:8080/download/lib/app.py & main.exe

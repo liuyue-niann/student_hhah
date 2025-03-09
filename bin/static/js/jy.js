@@ -7,7 +7,7 @@ function FileInfo(name, size, status) {
 
 const addFileBtn = document.getElementById('add-file-btn');
 const addFolderBtn = document.getElementById('add-folder-btn');
-const submitBtn = document.getElementById('submit-btn');
+const submit = document.getElementById('submit');
 const stopBtn = document.getElementById('stop-btn');
 const fileList = document.getElementById('file-list');
 const fileCountInfo = document.getElementById('file-count-info');
@@ -21,6 +21,10 @@ let files = [];
 addFileBtn.addEventListener('click', () => {
     file_upload.click()
 });
+submit.addEventListener('click', function () {
+    file_upload.click()
+})
+
 
 
 

@@ -1,0 +1,41 @@
+#file-submit-container {
+    width: 600px;
+    margin: 50px auto;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+#toolbar {
+    background-color: rgb(238, 237, 237);
+    color: white;
+    /*padding: 10px;*/
+    display: flex;
+    gap: 10px;
+}
+
+#toolbar button {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+#file-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+#file-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+#progress-info {
+    /*padding: 10px;*/
+    /*display: flex;*/
+    /*justify-content: space-between;*/
+    /*align-items: center;*/
+}

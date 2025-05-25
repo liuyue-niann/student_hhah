@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CopilotChatHistory">
+    <option name="conversations">
+      <list>
+        <Conversation>
+          <option name="createTime" value="1748199943294" />
+          <option name="id" value="019708d62c7e7a86857ae650df5dc911" />
+          <option name="title" value="新对话 2025年5月26日 03:05:43" />
+          <option name="updateTime" value="1748199943294" />
+        </Conversation>
+        <Conversation>
+          <option name="createTime" value="1748199910265" />
+          <option name="id" value="019708d5ab797cc295944f7e54be0d4e" />
+          <option name="title" value="新对话 2025年5月26日 03:05:10" />
+          <option name="updateTime" value="1748199910265" />
+        </Conversation>
+        <Conversation>
+          <option name="createTime" value="1748183449176" />
+          <option name="id" value="019707da80f7788195ea8126d677eb52" />
+          <option name="title" value="帮我实现前端，获取音频发送给后端实现语音识别" />
+          <option name="updateTime" value="1748183449176" />
+        </Conversation>
+        <Conversation>
+          <option name="createTime" value="1748179991856" />
+          <option name="id" value="019707a5bd307206b3da0b11a230108f" />
+          <option name="title" value="新对话 2025年5月25日 21:33:11" />
+          <option name="updateTime" value="1748179991856" />
+        </Conversation>
+        <Conversation>
+          <option name="createTime" value="1748178157565" />
+          <option name="id" value="01970789bffd796ca8c725e3f8f7f4c8" />
+          <option name="title" value="新对话 2025年5月25日 21:02:37" />
+          <option name="updateTime" value="1748178157565" />
+        </Conversation>
+      </list>
+    </option>
+  </component>
+</project>

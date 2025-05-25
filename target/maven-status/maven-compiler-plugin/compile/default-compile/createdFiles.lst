@@ -1,0 +1,8 @@
+com\cxcy\chuangye\domain\dto\Sentence.class
+com\cxcy\chuangye\domain\dto\Stash.class
+com\cxcy\chuangye\domain\dto\Root.class
+com\cxcy\chuangye\service\AiService.class
+com\cxcy\chuangye\controller\AiController.class
+com\cxcy\chuangye\Main.class
+com\cxcy\chuangye\ChuangyeApplication.class
+com\cxcy\chuangye\domain\dto\Word.class
